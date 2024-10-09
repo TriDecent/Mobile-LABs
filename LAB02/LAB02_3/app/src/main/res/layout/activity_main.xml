@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="15dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="15dp"
+    android:paddingBottom="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_employees_management"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/employee_management"
+        android:textSize="@dimen/text_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_employee_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_basex3"
+        android:labelFor="@id/et_employee_id"
+        android:text="@string/employee_id"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_employees_management" />
+
+    <TextView
+        android:id="@+id/tv_employee_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_basex4"
+        android:labelFor="@id/et_employee_name"
+        android:text="@string/employee_name"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_employee_id" />
+
+    <TextView
+        android:id="@+id/tv_employee_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_basex4"
+        android:text="@string/employee_type"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_employee_name" />
+
+    <EditText
+        android:id="@+id/et_employee_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="Enter ID"
+        android:hint="@string/employee_id"
+        android:inputType="text"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_employee_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_employees_management" />
+
+    <EditText
+        android:id="@+id/et_employee_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="Enter name"
+        android:hint="@string/employee_name"
+        android:inputType="text"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_employee_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_employees_management" />
+
+    <RadioGroup
+        android:id="@+id/rg_employee_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_employee_type"
+        app:layout_constraintStart_toStartOf="@+id/tv_employees_management"
+        app:layout_constraintTop_toTopOf="@+id/tv_employee_type">
+
+        <RadioButton
+            android:id="@+id/rb_full_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/full_time" />
+
+        <RadioButton
+            android:id="@+id/rb_part_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/part_time" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_employee_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/employee_submit"
+        android:layout_marginTop="@dimen/margin_basex4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_employee_type" />
+
+    <ListView
+        android:id="@+id/lv_employees"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_basex2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_employee_submit" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
