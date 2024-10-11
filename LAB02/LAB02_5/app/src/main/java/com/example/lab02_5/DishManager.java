@@ -5,7 +5,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.lab02_5.Models.Dish;
 import com.example.lab02_5.Models.DishesThumbnail;
@@ -16,7 +15,6 @@ public class DishManager {
 
     private final ArrayList<Dish> dishes;
     private final ArrayAdapter<Dish> dishesAdapter;
-    private final ArrayAdapter<DishesThumbnail> thumbnailAdapter;
     private final CheckBox cbPromoted;
     private final EditText etDishName;
     private final Spinner spFoodSelection;
@@ -25,7 +23,6 @@ public class DishManager {
     public DishManager(
             ArrayList<Dish> dishes,
             ArrayAdapter<Dish> dishesAdapter,
-            ArrayAdapter<DishesThumbnail> thumbnailAdapter,
             CheckBox cbPromoted,
             EditText etDishName,
             Spinner spFoodSelection,
@@ -33,7 +30,6 @@ public class DishManager {
     ) {
         this.dishes = dishes;
         this.dishesAdapter = dishesAdapter;
-        this.thumbnailAdapter = thumbnailAdapter;
         this.cbPromoted = cbPromoted;
         this.etDishName = etDishName;
         this.spFoodSelection = spFoodSelection;
@@ -41,7 +37,11 @@ public class DishManager {
     }
 
     public void addNewDish() {
-        String dishName = etDishName.getText().toString();
+        String dishName = etDishName.getText().toString().trim();
+
+        if (dishName.isEmpty()) {
+            return;
+        }
 
         int thumbnailIndex = spFoodSelection.getSelectedItemPosition();
         DishesThumbnail thumbnail = DishesThumbnail.values()[thumbnailIndex];
@@ -50,19 +50,15 @@ public class DishManager {
 
         dishes.add(dish);
 
-        // Adding new dish also means updating the dishes in the dropdown
-        spFoodSelection.setAdapter(thumbnailAdapter);
-        thumbnailAdapter.notifyDataSetChanged();
-
-        // Updates the dishes GridView
+        // Notify the adapter that the data has changed
         gvDishes.setAdapter(dishesAdapter);
         dishesAdapter.notifyDataSetChanged();
     }
 
-
-
     public void removeDish(int position) {
-        dishes.remove(position);
-        dishesAdapter.notifyDataSetChanged();
+        if (position >= 0 && position < dishes.size()) {
+            dishes.remove(position);
+            dishesAdapter.notifyDataSetChanged();
+        }
     }
 }

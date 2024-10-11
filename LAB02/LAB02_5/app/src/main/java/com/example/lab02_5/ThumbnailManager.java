@@ -15,7 +15,7 @@ public class ThumbnailManager {
         this.spFoodSelection = spFoodSelection;
     }
 
-    public void displayingThumbnails() {
+    public void displayThumbnails() {
         spFoodSelection.setAdapter(thumbnailAdapter);
         thumbnailAdapter.notifyDataSetChanged();
     }
