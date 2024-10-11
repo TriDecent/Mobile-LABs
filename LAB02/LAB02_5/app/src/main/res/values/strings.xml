@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">LAB02_5</string>
+    <string name="lab02_5">Lab02_5</string>
+    <string name="food_name">Name:</string>
+    <string name="food_thumbnail">Thumbnail</string>
+    <string name="food_promotion">Promotion</string>
+    <string name="staff">Staff</string>
+    <string name="adding_new_food">Add A New Dish</string>
+</resources>
