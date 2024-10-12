@@ -32,11 +32,5 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnEmployeeSubmit = findViewById(R.id.btn_employee_submit);
         btnEmployeeSubmit.setOnClickListener(view -> employeeManager.addNewEmployee());
-
-        rcEmployees.setOnLongClickListener(view -> {
-            int position = rcEmployees.getChildAdapterPosition(view);
-            employeeManager.removeEmployee(position);
-            return true;
-        });
     }
 }

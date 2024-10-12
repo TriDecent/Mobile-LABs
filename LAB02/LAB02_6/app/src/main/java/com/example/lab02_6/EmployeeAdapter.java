@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -58,6 +59,17 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
         holder.cvEmployeeInfoContainer.setCardBackgroundColor(backgroundColor);
 
         holder.cvEmployeeInfoContainer.setCardElevation(elevation);
+
+        holder.itemView.setOnLongClickListener(view -> {
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                employees.remove(adapterPosition);
+                notifyItemRemoved(adapterPosition);
+
+                Toast.makeText(context, "Removed successfully", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        });
     }
 
     @Override

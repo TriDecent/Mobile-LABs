@@ -54,5 +54,7 @@ public class EmployeeManager {
     public void removeEmployee(int position) {
         employees.remove(position);
         adapter.notifyItemRemoved(position);
+
+        Toast.makeText(context, "Removed successfully", Toast.LENGTH_SHORT).show();
     }
 }
