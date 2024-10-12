@@ -65,6 +65,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.MyView
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 employees.remove(adapterPosition);
                 notifyItemRemoved(adapterPosition);
+                notifyItemRangeChanged(adapterPosition, employees.size());
 
                 Toast.makeText(context, "Removed successfully", Toast.LENGTH_SHORT).show();
             }
