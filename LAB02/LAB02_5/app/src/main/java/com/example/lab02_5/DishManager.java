@@ -5,6 +5,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.lab02_5.Models.Dish;
 import com.example.lab02_5.Models.DishesThumbnail;
@@ -53,12 +54,16 @@ public class DishManager {
         // Notify the adapter that the data has changed
         gvDishes.setAdapter(dishesAdapter);
         dishesAdapter.notifyDataSetChanged();
+
+        Toast.makeText(gvDishes.getContext(), "Added Successfully", Toast.LENGTH_SHORT).show();
     }
 
     public void removeDish(int position) {
         if (position >= 0 && position < dishes.size()) {
             dishes.remove(position);
             dishesAdapter.notifyDataSetChanged();
+
+            Toast.makeText(gvDishes.getContext(), "Removed Successfully", Toast.LENGTH_SHORT).show();
         }
     }
 }
