@@ -29,8 +29,11 @@
                 android:id="@+id/tv_dish_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:padding="10dp"
-                android:text="Your Text"
+                android:singleLine="true"
+                android:text="Your Text Your TextYour TextYour TextYour Text"
                 android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintWidth_percent="0.75" />

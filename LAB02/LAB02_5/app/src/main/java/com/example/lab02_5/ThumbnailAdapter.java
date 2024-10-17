@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.lab02_5.Models.DishesThumbnail;
 
 import java.util.List;
@@ -18,16 +20,17 @@ public class ThumbnailAdapter extends ArrayAdapter<DishesThumbnail> {
         super(context, resource, objects);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         convertView = (convertView == null) ?
                 LayoutInflater
                         .from(getContext())
-                        .inflate(R.layout.items_thumbnails, parent, false) :
+                        .inflate(R.layout.selected_item_thumbnail, parent, false) :
                 convertView;
 
-        TextView tvSelectedDish = convertView.findViewById(R.id.tv_dropdown_dish_name);
-        ImageView ivSelectedThumbnail = convertView.findViewById(R.id.iv_dropdown_thumbnail);
+        TextView tvSelectedDish = convertView.findViewById(R.id.tv_selected__dish_name);
+        ImageView ivSelectedThumbnail = convertView.findViewById(R.id.iv_selected_thumbnail);
 
         DishesThumbnail thumbnail = getItem(position);
 
@@ -39,7 +42,7 @@ public class ThumbnailAdapter extends ArrayAdapter<DishesThumbnail> {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         convertView = (convertView == null) ?
                 LayoutInflater
                         .from(getContext())
