@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     SwitchCompat swStatus;
     StudentsViewModel viewModel;
     RecyclerView recyclerView;
-    Button btnAdd, btnViewAll;
+    Button btnAdd;
     StudentAdapter adapter;
 
     @Override
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         initializeViews();
         setupRecyclerView();
         setupSwitchListener();
-        setUpEditButtonListener();
         showCalendar();
         setupAddButtonListener();
         observeViewModel();
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         swStatus = findViewById(R.id.sw_edit_dialog_status);
         recyclerView = findViewById(R.id.rv_students);
         btnAdd = findViewById(R.id.btn_add);
-        btnViewAll = findViewById(R.id.btn_edit);
         viewModel = new StudentsViewModel(new StudentsDatabaseHelper(this));
     }
 
@@ -100,27 +98,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setUpEditButtonListener() {
-        btnViewAll.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Enter a Number");
-
-            // Set up the input
-            final EditText input = new EditText(this);
-            input.setInputType(InputType.TYPE_CLASS_NUMBER);
-            builder.setView(input);
-
-            // Set up the buttons
-            builder.setPositiveButton("OK", (dialog, which) -> {
-                String number = input.getText().toString();
-                // Handle the number input here
-                Toast.makeText(this, "Number entered: " + number, Toast.LENGTH_SHORT).show();
-            });
-            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-
-            builder.show();
-        });
-    }
 
     private void observeViewModel() {
         viewModel.getObservableAddedStudent()

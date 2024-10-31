@@ -70,6 +70,10 @@ public class StudentsViewModel {
         notifyObserversUpdatedStudent(currentStudent, newStudent);
     }
 
+    public Student get(Student student) {
+        return db.getById(student.Id());
+    }
+
     public List<Student> getAll() {
         return db.getAll();
     }

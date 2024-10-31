@@ -60,7 +60,7 @@ public class StudentsDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Student getById(int id) {
+    public Student getById(BigInteger id) {
         String stringQuery = "SELECT * FROM " + STUDENT_TABLE + " WHERE " + COLUMN_STUDENT_ID + " = ?";
         return queryBasedOnNeed(stringQuery, new String[]{String.valueOf(id)}).get(0);
     }
