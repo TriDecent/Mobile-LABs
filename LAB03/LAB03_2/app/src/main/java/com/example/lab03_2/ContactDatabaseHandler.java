@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class ContactDatabaseHandler extends SQLiteOpenHelper {
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "contactsManager";
@@ -24,7 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_PH_NO = "phone_number";
 
-    public DatabaseHandler(Context context) {
+    public ContactDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -52,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Adding new contact
-    public boolean addContact(Contact contact) {
+    public boolean add(Contact contact) {
         try (SQLiteDatabase db = getWritableDatabase()) {
             var cv = new ContentValues();
             //            cv.put(KEY_ID, contact.Id());
@@ -66,19 +66,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single contact
-    public Contact getContact(int id) {
+    public Contact getById(int id) {
         String stringQuery = "SELECT * FROM " + TABLE_CONTACTS + " WHERE " + KEY_ID + " = ?";
-        return queryContactBasedOnNeed(stringQuery, new String[]{String.valueOf(id)}).get(0);
+        return queryBasedOnNeed(stringQuery, new String[]{String.valueOf(id)}).get(0);
     }
 
     // Getting All Contacts
-    public List<Contact> getAllContacts() {
+    public List<Contact> getAll() {
         var stringQuery = "SELECT * FROM " + TABLE_CONTACTS;
-        return queryContactBasedOnNeed(stringQuery, null);
+        return queryBasedOnNeed(stringQuery, null);
     }
 
     // Updating single contact
-    public int updateContact(Contact contact) {
+    public int update(Contact contact) {
         try (var db = getWritableDatabase()) {
             var cv = new ContentValues();
             cv.put(KEY_ID, contact.Id());
@@ -94,7 +94,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Deleting single contact
-    public boolean deleteContact(Contact contact) {
+    public boolean delete(Contact contact) {
         try (var db = getWritableDatabase()) {
             var result = db.delete(
                     TABLE_CONTACTS,
@@ -106,7 +106,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    private List<Contact> queryContactBasedOnNeed(String queryString, String[] selectionArgs) {
+    private List<Contact> queryBasedOnNeed(String queryString, String[] selectionArgs) {
         var result = new ArrayList<Contact>();
         try (var db = getReadableDatabase();
              var cursor = db.rawQuery(queryString, selectionArgs)) {

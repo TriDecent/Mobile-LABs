@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 public class ContactsViewModel {
-    private final DatabaseHandler db;
+    private final ContactDatabaseHandler db;
 
     public final MutableLiveData<List<Contact>> contacts = new MutableLiveData<>();
 
-    public ContactsViewModel(DatabaseHandler db) {
+    public ContactsViewModel(ContactDatabaseHandler db) {
         this.db = db;
         loadContacts();
     }
@@ -19,22 +19,22 @@ public class ContactsViewModel {
     }
 
     public void loadContacts() {
-        contacts.setValue(db.getAllContacts());
+        contacts.setValue(db.getAll());
     }
 
     public Contact addContact(Contact contact) {
-        db.addContact(contact);
+        db.add(contact);
         loadContacts();
         return contact;
     }
 
     public Contact deleteContact(Contact contact) {
-        db.deleteContact(contact);
+        db.delete(contact);
         loadContacts();
         return contact;
     }
 
     public List<Contact> getAllContacts() {
-        return db.getAllContacts();
+        return db.getAll();
     }
 }

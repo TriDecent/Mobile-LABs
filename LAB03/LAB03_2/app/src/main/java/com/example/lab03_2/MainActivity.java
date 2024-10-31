@@ -30,17 +30,17 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        try (var db = new DatabaseHandler(this)) {
+        try (var db = new ContactDatabaseHandler(this)) {
             // Inserting Contacts
             Log.d(TAG + "Insert: ", "Inserting ..");
-            db.addContact(new Contact(22521528, "Tran Vu Anh Tri", "22521528"));
-            db.addContact(new Contact("Srinivas", "9199999999"));
-            db.addContact(new Contact("Tommy", "9522222222"));
-            db.addContact(new Contact("Karthik", "9533333333"));
+            db.add(new Contact(22521528, "Tran Vu Anh Tri", "22521528"));
+            db.add(new Contact("Srinivas", "9199999999"));
+            db.add(new Contact("Tommy", "9522222222"));
+            db.add(new Contact("Karthik", "9533333333"));
 
             // Reading all contacts
             Log.e(TAG + "Reading: ", "Reading all contacts..");
-            List<Contact> contacts = db.getAllContacts();
+            List<Contact> contacts = db.getAll();
 
             for (Contact cn : contacts) {
                 String log = "Id: " + cn.Id() + " ,Name: " + cn.Name() + ",Phone:" + cn.PhoneNumber();
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        viewModel = new ContactsViewModel(new DatabaseHandler(this));
+        viewModel = new ContactsViewModel(new ContactDatabaseHandler(this));
         recyclerView = (RecyclerView) findViewById(R.id.rv_contacts);
         adapter = new ContactAdapter(this, viewModel);
 
