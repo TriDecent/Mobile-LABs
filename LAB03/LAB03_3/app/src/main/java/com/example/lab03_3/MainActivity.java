@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.animation.CycleInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +26,6 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     TextView tvStatus;
@@ -50,21 +50,22 @@ public class MainActivity extends AppCompatActivity {
         initializeViews();
         setupRecyclerView();
         setupSwitchListener();
+        setUpEditButtonListener();
         showCalendar();
         setupAddButtonListener();
         observeViewModel();
     }
 
     private void initializeViews() {
-        tvStatus = findViewById(R.id.tv_status);
+        tvStatus = findViewById(R.id.tv_edit_dialog_status);
         etId = findViewById(R.id.et_id);
         etName = findViewById(R.id.et_name);
         etEmail = findViewById(R.id.et_email);
         etDate = findViewById(R.id.et_date);
-        swStatus = findViewById(R.id.sw_status);
+        swStatus = findViewById(R.id.sw_edit_dialog_status);
         recyclerView = findViewById(R.id.rv_students);
         btnAdd = findViewById(R.id.btn_add);
-        btnViewAll = findViewById(R.id.btn_view_all);
+        btnViewAll = findViewById(R.id.btn_edit);
         viewModel = new StudentsViewModel(new StudentsDatabaseHelper(this));
     }
 
@@ -99,14 +100,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void observeViewModel() {
-        viewModel.getObservableAddedStudent().observe(this, student -> {
-            if (student != null) {
-                adapter.notifyItemInserted(viewModel.getAll().size() - 1);
-            }
+    private void setUpEditButtonListener() {
+        btnViewAll.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Enter a Number");
+
+            // Set up the input
+            final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+            builder.setView(input);
+
+            // Set up the buttons
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                String number = input.getText().toString();
+                // Handle the number input here
+                Toast.makeText(this, "Number entered: " + number, Toast.LENGTH_SHORT).show();
+            });
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+
+            builder.show();
         });
+    }
+
+    private void observeViewModel() {
+        viewModel.getObservableAddedStudent()
+                .observe(this, student -> adapter.notifyItemInserted(viewModel.getAll().size() - 1));
 
         viewModel.getObservableDeletedStudent().observe(this, adapter::notifyItemRemoved);
+
+        viewModel.getObservableUpdatedStudent().observe(this, adapter::notifyItemChanged);
     }
 
     private void showCalendar() {
