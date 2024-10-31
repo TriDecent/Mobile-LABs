@@ -7,11 +7,10 @@ import java.util.List;
 public class StudentsViewModel {
     private final StudentsDatabaseHelper db;
 
-    // MutableLiveData for the list of students and specific changes
     public final MutableLiveData<List<Student>> students = new MutableLiveData<>();
     public final MutableLiveData<Student> addedStudent = new MutableLiveData<>();
-    public final MutableLiveData<Integer> studentDeletedPosition = new MutableLiveData<>();
-    public final MutableLiveData<Integer> updatedStudent = new MutableLiveData<>();
+    public final MutableLiveData<Integer> deletedPosition = new MutableLiveData<>();
+    public final MutableLiveData<Integer> updatedPosition = new MutableLiveData<>();
 
     public StudentsViewModel(StudentsDatabaseHelper db) {
         this.db = db;
@@ -27,11 +26,11 @@ public class StudentsViewModel {
     }
 
     public MutableLiveData<Integer> getObservableDeletedStudent() {
-        return studentDeletedPosition;
+        return deletedPosition;
     }
 
     public MutableLiveData<Integer> getObservableUpdatedStudent() {
-        return updatedStudent;
+        return updatedPosition;
     }
 
     // Load initial list of students
@@ -42,32 +41,17 @@ public class StudentsViewModel {
     public void add(Student student) {
         db.add(student); // Add student to database
         addedStudent.setValue(student); // Set addedStudent to trigger observer
-        notifyObserversAddedOrDeletedStudent(student, true);
+        addStudentToList(student);
     }
 
     public void delete(Student student) {
         db.delete(student); // Remove student from database
-        List<Student> currentList = students.getValue();
-        if (currentList != null) {
-            int position = currentList.indexOf(student);
-            if (position != -1) {
-                studentDeletedPosition.setValue(position); // Set the position of the deleted student
-            }
-        }
-        notifyObserversAddedOrDeletedStudent(student, false);
+        removeStudentFromList(student);
     }
 
     public void update(Student currentStudent, Student newStudent) {
         db.update(newStudent); // Update student in database
-        List<Student> currentList = students.getValue();
-        if (currentList != null) {
-            int position = currentList.indexOf(currentStudent);
-            if (position != -1) {
-                updatedStudent.setValue(position); // Set the position of the updated student
-            }
-        }
-
-        notifyObserversUpdatedStudent(currentStudent, newStudent);
+        updateStudentInList(currentStudent, newStudent);
     }
 
     public Student get(Student student) {
@@ -78,28 +62,40 @@ public class StudentsViewModel {
         return db.getAll();
     }
 
-    // Notify observers of changes
-    private void notifyObserversAddedOrDeletedStudent(Student student, boolean isAdded) {
+    // Update students list by adding a new student
+    private void addStudentToList(Student student) {
         List<Student> currentList = students.getValue();
         if (currentList != null) {
-            if (isAdded) {
-                currentList.add(student);
-            } else {
-                currentList.remove(student);
-            }
-            students.setValue(currentList); // Update LiveData with modified list
+            currentList.add(student);
+            students.setValue(currentList);
         }
     }
 
-    private void notifyObserversUpdatedStudent(Student currentStudent, Student newStudent) {
+    // Update students list by removing a student
+    private void removeStudentFromList(Student student) {
+        List<Student> currentList = students.getValue();
+        if (currentList != null) {
+            int position = currentList.indexOf(student);
+            if (position != -1) {
+                currentList.remove(position);
+                deletedPosition.setValue(position); // Notify observers of the deleted student position
+                students.setValue(currentList);
+            }
+        }
+    }
+
+    // Update students list by modifying an existing student
+    private void updateStudentInList(Student currentStudent, Student newStudent) {
         List<Student> currentList = students.getValue();
         if (currentList != null) {
             int position = currentList.indexOf(currentStudent);
             if (position != -1) {
                 currentList.set(position, newStudent);
-                students.setValue(currentList); // Update LiveData with modified list
+                updatedPosition.setValue(position); // Notify observers of the updated student position
+                students.setValue(currentList);
             }
         }
     }
 }
+
 
