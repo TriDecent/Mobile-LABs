@@ -1,4 +1,4 @@
-package com.example.lab03_3;
+package com.example.lab03_3.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.lab03_3.enums.Status;
+import com.example.lab03_3.models.Student;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -71,14 +74,14 @@ public class StudentsDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Updating single student
-    public int update(Student student) {
+    public int update(Student currentStudent, Student newStudent) {
         try (var db = getWritableDatabase()) {
-            var cv = createStudentContentValues(student);
+            var cv = createStudentContentValues(newStudent);
 
             return db.update(STUDENT_TABLE,
                     cv,
                     COLUMN_STUDENT_ID + "= ?",
-                    new String[]{String.valueOf(student.Id())}
+                    new String[]{String.valueOf(currentStudent.Id())}
             );
         }
     }

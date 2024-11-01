@@ -1,6 +1,9 @@
-package com.example.lab03_3;
+package com.example.lab03_3.viewmodels;
 
 import androidx.lifecycle.MutableLiveData;
+
+import com.example.lab03_3.database.StudentsDatabaseHelper;
+import com.example.lab03_3.models.Student;
 
 import java.util.List;
 
@@ -50,7 +53,7 @@ public class StudentsViewModel {
     }
 
     public void update(Student currentStudent, Student newStudent) {
-        db.update(newStudent); // Update student in database
+        db.update(currentStudent, newStudent); // Update student in database
         updateStudentInList(currentStudent, newStudent);
     }
 
