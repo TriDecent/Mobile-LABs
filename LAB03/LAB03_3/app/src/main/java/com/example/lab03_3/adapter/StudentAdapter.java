@@ -1,4 +1,4 @@
-package com.example.lab03_3;
+package com.example.lab03_3.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.lab03_3.R;
+import com.example.lab03_3.dialogs.StudentDetailsDialog;
+import com.example.lab03_3.models.Student;
+import com.example.lab03_3.viewmodels.StudentsViewModel;
 
 import java.util.Locale;
 
@@ -37,8 +43,21 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         var currentStudent = students.get(position);
         holder.bindData(currentStudent);
 
+        int backgroundColor = (position % 2 == 0) ?
+                ContextCompat.getColor(context, R.color.white) :
+                ContextCompat.getColor(context, R.color.light_blue);
+
+        // Show different color backgrounds for 2 continuous employees
+
+        int elevation = (position % 2 == 0) ? 8 : 0;
+
+        holder.cvStudent.setCardBackgroundColor(backgroundColor);
+        holder.cvStudent.setCardElevation(elevation);
+
         holder.cvStudent.setOnLongClickListener(v -> {
             viewModel.delete(currentStudent);
+            notifyItemRangeChanged(position, getItemCount());
+
             return true;
         });
 
