@@ -20,6 +20,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab03_3.adapter.StudentAdapter;
+import com.example.lab03_3.database.StudentsDatabaseHelper;
+import com.example.lab03_3.enums.Status;
+import com.example.lab03_3.models.Student;
+import com.example.lab03_3.viewmodels.StudentsViewModel;
+
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

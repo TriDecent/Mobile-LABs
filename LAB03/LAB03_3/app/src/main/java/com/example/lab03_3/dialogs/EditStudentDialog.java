@@ -1,4 +1,4 @@
-package com.example.lab03_3;
+package com.example.lab03_3.dialogs;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -10,18 +10,24 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.example.lab03_3.R;
+import com.example.lab03_3.enums.Status;
+import com.example.lab03_3.models.Student;
+import com.example.lab03_3.viewmodels.StudentsViewModel;
+
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.function.Consumer;
 
 public class EditStudentDialog {
     private final Context context;
     private final Student originalStudent;
     private final StudentsViewModel viewModel;
-    private final Runnable callBack;
+    private final Consumer<Student> callBack;
 
-    public EditStudentDialog(Context context, Student originalStudent, StudentsViewModel viewModel, Runnable callBack) {
+    public EditStudentDialog(Context context, Student originalStudent, StudentsViewModel viewModel, Consumer<Student> callBack) {
         this.context = context;
         this.originalStudent = originalStudent;
         this.viewModel = viewModel;
@@ -67,7 +73,7 @@ public class EditStudentDialog {
 
             // Update the student in the database and call the callback to refresh the UI in StudentDetailsDialog
             viewModel.update(originalStudent, editedStudent);
-            callBack.run();
+            callBack.accept(editedStudent);
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();

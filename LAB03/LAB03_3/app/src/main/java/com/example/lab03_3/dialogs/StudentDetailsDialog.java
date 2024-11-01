@@ -1,4 +1,4 @@
-package com.example.lab03_3;
+package com.example.lab03_3.dialogs;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.example.lab03_3.R;
+import com.example.lab03_3.models.Student;
+import com.example.lab03_3.viewmodels.StudentsViewModel;
 
 public class StudentDetailsDialog {
     private final Context context;
@@ -33,13 +37,13 @@ public class StudentDetailsDialog {
         ImageView ivEdit = dialogView.findViewById(R.id.iv_edit);
 
         // Set initial student details
-        updateStudentDetails(tvDialogId, tvDialogName, tvDialogEmail, tvDialogDate, tvDialogStatus);
+        updateStudentDetails(tvDialogId, tvDialogName, tvDialogEmail, tvDialogDate, tvDialogStatus, student);
 
         // Open EditStudentDialog with a callback to refresh this dialog's UI
         ivEdit.setOnClickListener(v ->
-                new EditStudentDialog(context, student, viewModel, () -> {
+                new EditStudentDialog(context, student, viewModel, (newStudent) -> {
                     // Re-fetch updated student data and refresh UI
-                    updateStudentDetails(tvDialogId, tvDialogName, tvDialogEmail, tvDialogDate, tvDialogStatus);
+                    updateStudentDetails(tvDialogId, tvDialogName, tvDialogEmail, tvDialogDate, tvDialogStatus, newStudent);
                 }).show()
         );
 
@@ -47,8 +51,8 @@ public class StudentDetailsDialog {
         builder.create().show();
     }
 
-    private void updateStudentDetails(TextView tvId, TextView tvName, TextView tvEmail, TextView tvDate, TextView tvStatus) {
-        Student updatedStudent = viewModel.get(student);
+    private void updateStudentDetails(TextView tvId, TextView tvName, TextView tvEmail, TextView tvDate, TextView tvStatus, Student newStudent) {
+        Student updatedStudent = viewModel.get(newStudent);
         tvId.setText(String.valueOf(updatedStudent.Id()));
         tvName.setText(updatedStudent.Name());
         tvEmail.setText(updatedStudent.Email());
