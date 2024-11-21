@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewActivity" />
+        <activity
+            android:name=".NewActivity"
+            android:theme="@style/Theme.AppCompat.DayNight" />
     </application>
 
 </manifest>

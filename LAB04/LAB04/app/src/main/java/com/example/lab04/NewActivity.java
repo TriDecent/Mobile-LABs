@@ -5,18 +5,24 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Objects;
+
 public class NewActivity extends AppCompatActivity {
-    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new);
 
-        //        getSupportActionBar().setTitle("My Activity Title");
+        if (getSupportActionBar() != null) {
+            Objects.requireNonNull(getSupportActionBar()).setTitle("LAB04_3");
+        }
 
-        btnBack = findViewById(R.id.btn_back);
+        Button btnBack = findViewById(R.id.btn_back);
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> {
+            finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+        });
     }
 }

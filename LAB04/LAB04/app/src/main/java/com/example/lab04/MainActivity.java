@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         setupAnimationForButtons();
 
-        ivUitLogo.setOnClickListener(v -> startActivity(new Intent(this, NewActivity.class)));
+        ivUitLogo.setOnClickListener(v -> {
+            startActivity(new Intent(this, NewActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left);
+        });
     }
 
     private void initializeViewReferences() {
