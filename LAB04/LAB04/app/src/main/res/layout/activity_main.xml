@@ -130,28 +130,6 @@
                 app:layout_constraintStart_toEndOf="@id/btn_blink_xml"
                 app:layout_constraintTop_toBottomOf="@id/btn_fade_out_code" />
 
-            <!-- Blink Buttons -->
-            <Button
-                android:id="@+id/btn_blink_xml"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_base"
-                android:layout_marginEnd="@dimen/margin_base"
-                android:text="@string/blink"
-                app:layout_constraintEnd_toStartOf="@+id/btn_blink_code"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_fade_out_xml" />
-
-            <Button
-                android:id="@+id/btn_blink_code"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_base"
-                android:text="@string/blink"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_blink_xml"
-                app:layout_constraintTop_toBottomOf="@id/btn_fade_out_code" />
-
             <!-- Zoom In Buttons -->
             <Button
                 android:id="@+id/btn_zoom_in_xml"

@@ -33,11 +33,24 @@ public class MainActivity extends AppCompatActivity {
         initializeViewReferences();
         setupAnimationListener();
 
-        final var loadedAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_fade_in);
+        setupAnimationForButtons();
+    }
 
-        loadedAnimation.setAnimationListener(animationListener);
+    private void setupAnimationForButtons() {
+        initializeXmlAnimationsForButtons();
+    }
 
-        btnFadeInXml.setOnClickListener(v -> ivUitLogo.startAnimation(loadedAnimation));
+    private void initializeXmlAnimationsForButtons() {
+        setupButtonWithAnimation(btnFadeInXml, R.anim.anim_fade_in);
+        setupButtonWithAnimation(btnFadeOutXml, R.anim.anim_fade_out);
+        setupButtonWithAnimation(btnBlinkXml, R.anim.anim_blink);
+        setupButtonWithAnimation(btnZoomInXml, R.anim.anim_zoom_in);
+        setupButtonWithAnimation(btnZoomOutXml, R.anim.anim_zoom_out);
+        setupButtonWithAnimation(btnRotateXml, R.anim.anim_rotate);
+        setupButtonWithAnimation(btnMoveXml, R.anim.anim_move);
+        setupButtonWithAnimation(btnSlideUpXml, R.anim.anim_slide_up);
+        setupButtonWithAnimation(btnBounceXml, R.anim.anim_bounce);
+        setupButtonWithAnimation(btnCombineXml, R.anim.anim_combine);
     }
 
     private void initializeViewReferences() {
@@ -73,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                Toast.makeText(getApplicationContext(), "Animation Stopped",
+                Toast.makeText(getApplicationContext(), "Animation Ended",
                         Toast.LENGTH_SHORT).show();
 
             }
@@ -83,5 +96,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    private void setupButtonWithAnimation(Button button, int animationId) {
+        final var loadedAnimation = AnimationUtils.loadAnimation(this, animationId);
+
+        loadedAnimation.setAnimationListener(animationListener);
+
+        button.setOnClickListener(v -> ivUitLogo.startAnimation(loadedAnimation));
     }
 }
