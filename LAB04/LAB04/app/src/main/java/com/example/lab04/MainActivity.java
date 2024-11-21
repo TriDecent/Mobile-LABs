@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivUitLogo;
     private Animation.AnimationListener animationListener;
 
+    private final IAnimationGenerator animationGenerator = new AnimationGenerator();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,19 +40,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupAnimationForButtons() {
         initializeXmlAnimationsForButtons();
+        initializeCodeAnimationsForButtons();
     }
 
     private void initializeXmlAnimationsForButtons() {
-        setupButtonWithAnimation(btnFadeInXml, R.anim.anim_fade_in);
-        setupButtonWithAnimation(btnFadeOutXml, R.anim.anim_fade_out);
-        setupButtonWithAnimation(btnBlinkXml, R.anim.anim_blink);
-        setupButtonWithAnimation(btnZoomInXml, R.anim.anim_zoom_in);
-        setupButtonWithAnimation(btnZoomOutXml, R.anim.anim_zoom_out);
-        setupButtonWithAnimation(btnRotateXml, R.anim.anim_rotate);
-        setupButtonWithAnimation(btnMoveXml, R.anim.anim_move);
-        setupButtonWithAnimation(btnSlideUpXml, R.anim.anim_slide_up);
-        setupButtonWithAnimation(btnBounceXml, R.anim.anim_bounce);
-        setupButtonWithAnimation(btnCombineXml, R.anim.anim_combine);
+        setupButtonWithXMLAnimation(btnFadeInXml, R.anim.anim_fade_in);
+        setupButtonWithXMLAnimation(btnFadeOutXml, R.anim.anim_fade_out);
+        setupButtonWithXMLAnimation(btnBlinkXml, R.anim.anim_blink);
+        setupButtonWithXMLAnimation(btnZoomInXml, R.anim.anim_zoom_in);
+        setupButtonWithXMLAnimation(btnZoomOutXml, R.anim.anim_zoom_out);
+        setupButtonWithXMLAnimation(btnRotateXml, R.anim.anim_rotate);
+        setupButtonWithXMLAnimation(btnMoveXml, R.anim.anim_move);
+        setupButtonWithXMLAnimation(btnSlideUpXml, R.anim.anim_slide_up);
+        setupButtonWithXMLAnimation(btnBounceXml, R.anim.anim_bounce);
+        setupButtonWithXMLAnimation(btnCombineXml, R.anim.anim_combine);
+    }
+
+    private void initializeCodeAnimationsForButtons() {
+        setupButtonWithCodeAnimation(btnFadeInCode, animationGenerator.getFadeIn());
+        setupButtonWithCodeAnimation(btnFadeOutCode, animationGenerator.getFadeOut());
+        setupButtonWithCodeAnimation(btnBlinkCode, animationGenerator.getBlink());
+        setupButtonWithCodeAnimation(btnZoomInCode, animationGenerator.getZoomIn());
+        setupButtonWithCodeAnimation(btnZoomOutCode, animationGenerator.getZoomOut());
+        setupButtonWithCodeAnimation(btnRotateCode, animationGenerator.getRotate());
+        setupButtonWithCodeAnimation(btnMoveCode, animationGenerator.getMove());
+        setupButtonWithCodeAnimation(btnSlideUpCode, animationGenerator.getSlideUp());
+        setupButtonWithCodeAnimation(btnBounceCode, animationGenerator.getBounce());
+        setupButtonWithCodeAnimation(btnCombineCode, animationGenerator.getCombine());
     }
 
     private void initializeViewReferences() {
@@ -77,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
         btnCombineCode = findViewById(R.id.btn_combine_code);
     }
 
+    private void setupButtonWithXMLAnimation(Button button, int animationId) {
+        final var loadedAnimation = AnimationUtils.loadAnimation(this, animationId);
+
+        loadedAnimation.setAnimationListener(animationListener);
+
+        button.setOnClickListener(v -> ivUitLogo.startAnimation(loadedAnimation));
+    }
+
     private void setupAnimationListener() {
         animationListener = new Animation.AnimationListener() {
             @Override
@@ -98,11 +122,10 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private void setupButtonWithAnimation(Button button, int animationId) {
-        final var loadedAnimation = AnimationUtils.loadAnimation(this, animationId);
+    private void setupButtonWithCodeAnimation(Button button, Animation animation) {
+        animation.setAnimationListener(animationListener);
 
-        loadedAnimation.setAnimationListener(animationListener);
-
-        button.setOnClickListener(v -> ivUitLogo.startAnimation(loadedAnimation));
+        button.setOnClickListener(v -> ivUitLogo.startAnimation(animation));
     }
 }
+
