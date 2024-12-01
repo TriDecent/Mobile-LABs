@@ -30,7 +30,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
         var messages = getMessagesFromIntent(intent);
 
-        var addresses = extractAddresses(messages);
+        var addresses = extractAddressesFromMessages(messages);
         if (addresses.isEmpty()) return;
 
         if (MainActivity.isRunning) {
@@ -40,7 +40,7 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
 
-    private List<String> extractAddresses(SmsMessage[] messages) {
+    private List<String> extractAddressesFromMessages(SmsMessage[] messages) {
         var pattern = Pattern.compile(QUERY_STRING_REGEX);
         return Arrays.stream(messages)
                 .filter(message ->
