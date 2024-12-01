@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ChangedContactLis
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contactRepository.getContacts());
         lvMessages.setAdapter(adapter);
 
-        smsResponder = new SmsResponder(this, contactRepository);
+        smsResponder = new SmsResponder(contactRepository);
 
         boolean autoResponse = sharedPreferences.getBoolean(AUTO_RESPONSE, false);
         swAutoResponse.setChecked(autoResponse);
