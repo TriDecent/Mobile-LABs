@@ -10,7 +10,7 @@ public class SmsResponder {
     private final SmsManager smsManager;
     private final SmsContactRepository contactRepository;
 
-    private static final String I_AM_SAFE_AND_WELL_DO_NOT_WORRY = "I am safe and well. Don\\'t Worry!";
+    private static final String I_AM_SAFE_AND_WELL_DO_NOT_WORRY = "I am safe and well. Don't Worry!";
     private static final String TELL_MY_MOTHER_I_LOVE_HER = "Tell my mother I love her.";
 
     public SmsResponder(SmsContactRepository contactRepository) {
