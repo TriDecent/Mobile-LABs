@@ -1,4 +1,4 @@
-package com.example.lab05_3;
+package com.example.lab05_3.domain;
 
 import static android.provider.Telephony.Sms.Intents.SMS_RECEIVED_ACTION;
 import static android.provider.Telephony.Sms.Intents.getMessagesFromIntent;
@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsMessage;
+
+import com.example.lab05_3.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
