@@ -13,13 +13,14 @@ import com.example.lab05_3.MainActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class SmsReceiver extends BroadcastReceiver {
     public static final String SMS_FORWARD_BROADCAST_RECEIVER = "SMS_FORWARD_BROADCAST_RECEIVER";
     public static final String SMS_MESSAGE_ADDRESS_KEY = "SMS_MESSAGE_ADDRESS_KEY";
 
-    private static final String QUERY_STRING = "are you ok";
+    private static final String QUERY_STRING_REGEX = "(?i).*are you ok.*";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -40,8 +41,10 @@ public class SmsReceiver extends BroadcastReceiver {
     }
 
     private List<String> extractAddresses(SmsMessage[] messages) {
+        var pattern = Pattern.compile(QUERY_STRING_REGEX);
         return Arrays.stream(messages)
-                .filter(message -> message.getMessageBody().toLowerCase().contains(QUERY_STRING))
+                .filter(message ->
+                        pattern.matcher(message.getMessageBody()).matches())
                 .map(SmsMessage::getOriginatingAddress)
                 .collect(Collectors.toList());
     }
